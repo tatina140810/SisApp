@@ -166,7 +166,7 @@ class VerificationViewController: UIViewController {
     }
     
     @objc func entryButtonTapped(){
-        let vc = PasswordCodeCreate()
+        let vc = EnterСodePasswordViewController() 
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func didntReceiveTheCodeButtonTapped(){

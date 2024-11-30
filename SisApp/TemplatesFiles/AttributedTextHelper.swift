@@ -13,9 +13,8 @@ class AttributedTextHelper {
  
         let range = (fullText as NSString).range(of: tappableText)
       
-        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: range)
+        attributedString.addAttribute(.foregroundColor, value: UIColor(hex: "#4CA2FF"), range: range)
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(hex: "#0A84FF"), range: range)
         
        
         label.attributedText = attributedString

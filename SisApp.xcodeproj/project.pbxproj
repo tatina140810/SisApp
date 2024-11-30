@@ -11,10 +11,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AF2DC33F2CFADEFA003ADD32 /* Exceptions for "SisApp" folder in "SisApp" target */ = {
+		AF2DC37C2CFAEA51003ADD32 /* Exceptions for "SisApp" folder in "SisApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				SupportingFiles/Info.plist,
 			);
 			target = AF2DC32C2CFADEF8003ADD32 /* SisApp */;
 		};
@@ -24,7 +24,7 @@
 		AF2DC32F2CFADEF8003ADD32 /* SisApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				AF2DC33F2CFADEFA003ADD32 /* Exceptions for "SisApp" folder in "SisApp" target */,
+				AF2DC37C2CFAEA51003ADD32 /* Exceptions for "SisApp" folder in "SisApp" target */,
 			);
 			path = SisApp;
 			sourceTree = "<group>";
@@ -147,12 +147,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H26KGNHNNP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SisApp/Info.plist;
+				INFOPLIST_FILE = SisApp/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -175,12 +175,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H26KGNHNNP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SisApp/Info.plist;
+				INFOPLIST_FILE = SisApp/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
