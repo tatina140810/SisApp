@@ -1,13 +1,8 @@
-//
-//  ViewController.swift
-//  SisApp
-//
-//  Created by Tatina Dzhakypbekova on 30/11/24.
-//
-
 import UIKit
 
 class MainViewController: UIViewController {
+    
+    private let viewModel: MainViewModelProtocol
     
     private var logoImage: UIImageView = {
         let image = UIImageView()
@@ -17,7 +12,6 @@ class MainViewController: UIViewController {
     }()
     private var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "SIS"
         label.textColor = .white
         label.font = UIFont(name: "SFProDisplay-Medium", size: 34)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +19,6 @@ class MainViewController: UIViewController {
     }()
     private var subTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Выбери свою безопасность "
         label.textColor = .white
         label.font = UIFont(name: "SFProDisplay-Regular", size: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +36,6 @@ class MainViewController: UIViewController {
     
     private var noAccauntLabel: UILabel = {
         let label = UILabel()
-        label.text = "У вас нет аккаунта?\nЗарегистрируйтесь сейчас"
         label.textColor = .white
         label.font = UIFont(name: "SFProText-Regular", size: 14)
         label.numberOfLines = 0
@@ -51,6 +43,15 @@ class MainViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    init(viewModel: MainViewModelProtocol){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
@@ -66,6 +67,9 @@ class MainViewController: UIViewController {
         view.addSubview(entryButton)
         view.addSubview(noAccauntLabel)
         
+        titleLabel.text = viewModel.title
+        subTitleLabel.text = viewModel.subTitle
+        noAccauntLabel.text = viewModel.noAccountText
         
         NSLayoutConstraint.activate([
             
@@ -93,8 +97,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func entryButtonTapped(){
-        let vc = PhoneLoginViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        viewModel.handleEntryButtonTapped()
       
     }
     private func createAttributedText() {
@@ -107,8 +110,7 @@ class MainViewController: UIViewController {
         )
     }
     @objc func attributedPrivaciTextTapped(){
-        let vc = PhoneRegisterViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        viewModel.handleNoAccauntTapped()
     }
     
     

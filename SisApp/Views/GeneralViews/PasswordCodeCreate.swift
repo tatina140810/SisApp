@@ -23,11 +23,7 @@ class PasswordCodeCreate: UIViewController {
         return label
     }()
     private lazy var codeTextField: UITextField = {
-        let textField = TextFieldSettings().textFieldMaker(
-            placeholder: "",
-            backgroundColor: UIColor(hex: "#1C192C"),
-            cornerRadius: 26
-        )
+        let textField = GradientTextField(placeholder: "")
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
@@ -60,7 +56,7 @@ class PasswordCodeCreate: UIViewController {
         
         view.addSubview(codeCreateLabel)
         view.addSubview(subTitleLabel)
-        view.addSubview(codeTextField)
+   view.addSubview(codeTextField)
         view.addSubview(skipButton)
         
         

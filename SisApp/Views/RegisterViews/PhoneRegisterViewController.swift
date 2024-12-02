@@ -12,9 +12,9 @@ class PhoneRegisterViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private var codeTextField = TextFieldSettings().textFieldMaker(placeholder: "+7")
-    private var numberTextField = TextFieldSettings().textFieldMaker(placeholder: "9195346703")
-    
+    private var codeTextField = GradientTextField(placeholder: "+7")
+    private var numberTextField = GradientTextField(placeholder: "9195346703")
+   
     private var subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Код придет на ваш номер телефона"
@@ -42,6 +42,7 @@ class PhoneRegisterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupUI()
+        countryCodeButtonSetup()
         backButtonSettings()
         navigationItem.title = "Зарегистрироваться"
         navigationController?.navigationBar.titleTextAttributes = attributes
@@ -83,6 +84,22 @@ class PhoneRegisterViewController: UIViewController {
         ])
         
     }
+    func countryCodeButtonSetup(){
+        let countryCodeButton = UIButton(type: .custom)
+        countryCodeButton.setImage(UIImage(resource: .subtract), for: .normal)
+        countryCodeButton.tintColor = .white
+        countryCodeButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        countryCodeButton.translatesAutoresizingMaskIntoConstraints = false
+        countryCodeButton.addTarget(self, action: #selector(choiseCodeButtonTapped), for: .touchUpInside)
+        
+        
+        let rightPaddingView = UIView(frame: CGRect(x: -15, y: 0, width: 24, height: 24))
+        rightPaddingView.addSubview(countryCodeButton)
+        countryCodeButton.center = rightPaddingView.center
+        
+        codeTextField.rightView = rightPaddingView
+        codeTextField.rightViewMode = .always
+    }
     private func backButtonSettings(){
         let backButton = UIBarButtonItem(
               image: UIImage(systemName: "arrow.backward"),
@@ -100,6 +117,9 @@ class PhoneRegisterViewController: UIViewController {
     }
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    @objc func choiseCodeButtonTapped(){
+        print("choiseCodeButtonTapped")
     }
     
 }

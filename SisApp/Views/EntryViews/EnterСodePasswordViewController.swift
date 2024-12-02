@@ -19,16 +19,8 @@ class EnterСodePasswordViewController: UIViewController {
         return label
     }()
     
-    private lazy var codeTextField: UITextField = {
-        let textField = TextFieldSettings().textFieldMaker(
-            placeholder: "",
-            backgroundColor: UIColor(hex: "#1C192C"),
-            cornerRadius: 26
-        )
-        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        return textField
-    }()
-    
+    private let codeTextField = GradientTextField( placeholder: "")
+       
     let attributes: [NSAttributedString.Key: Any] = [
         .font: UIFont(name: "SFProText-Regular", size: 20) as Any,
         .foregroundColor: UIColor.white
@@ -48,15 +40,12 @@ class EnterСodePasswordViewController: UIViewController {
         view.addSubview(titleLabel)
 
         view.addSubview(codeTextField)
-
-        
-        
+        codeTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+       
         NSLayoutConstraint.activate([
             
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 210),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-           
             
             codeTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
             codeTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),

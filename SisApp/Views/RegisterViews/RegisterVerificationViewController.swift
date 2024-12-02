@@ -1,16 +1,3 @@
-//
-//  RegisterVerificationViewController.swift
-//  SisApp
-//
-//  Created by Tatina Dzhakypbekova on 1/12/24.
-//
-
-//
-//  VerificationViewController.swift
-//  SisApp
-//
-//  Created by Tatina Dzhakypbekova on 1/12/24.
-//
 
 import UIKit
 
@@ -55,13 +42,13 @@ class RegisterVerificationViewController: UIViewController {
         return stack
     }()
     
-    private var firstTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var secondTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var thirdTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var forthTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var fifthTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var sixthTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    
+    private var firstTextField = GradientTextField(placeholder: "")
+    private var secondTextField = GradientTextField(placeholder: "")
+    private var thirdTextField = GradientTextField(placeholder: "")
+    private var forthTextField = GradientTextField(placeholder: "")
+    private var fifthTextField = GradientTextField(placeholder: "")
+    private var sixthTextField = GradientTextField(placeholder: "")
+ 
     private lazy var entryButton: UIButton = {
         let button = ButtonSettings().buttonMaker(
             title: "Зарегистрироваться",

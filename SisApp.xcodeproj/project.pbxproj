@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AF2DC45E2CFDA1C9003ADD32 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AF2DC45D2CFDA1C9003ADD32 /* KeychainSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		AF2DC32D2CFADEF8003ADD32 /* SisApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SisApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF2DC45E2CFDA1C9003ADD32 /* KeychainSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = SisApp;
 			packageProductDependencies = (
+				AF2DC45D2CFDA1C9003ADD32 /* KeychainSwift */,
 			);
 			productName = SisApp;
 			productReference = AF2DC32D2CFADEF8003ADD32 /* SisApp.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = AF2DC3242CFADEF8003ADD32;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AF2DC45C2CFDA1C8003ADD32 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AF2DC32E2CFADEF8003ADD32 /* Products */;
 			projectDirPath = "";
@@ -335,6 +344,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AF2DC45C2CFDA1C8003ADD32 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AF2DC45D2CFDA1C9003ADD32 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF2DC45C2CFDA1C8003ADD32 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AF2DC3252CFADEF8003ADD32 /* Project object */;
 }

@@ -48,12 +48,12 @@ class VerificationViewController: UIViewController {
         return stack
     }()
     
-    private var firstTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var secondTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var thirdTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var forthTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var fifthTextField = TextFieldSettings().textFieldMaker(placeholder: "")
-    private var sixthTextField = TextFieldSettings().textFieldMaker(placeholder: "")
+    private let firstTextField = GradientTextField(placeholder: "")
+    private var secondTextField = GradientTextField(placeholder: "")
+    private var thirdTextField = GradientTextField(placeholder: "")
+    private var forthTextField = GradientTextField(placeholder: "")
+    private var fifthTextField = GradientTextField(placeholder: "")
+    private var sixthTextField = GradientTextField(placeholder: "")
     
     private lazy var entryButton: UIButton = {
         let button = ButtonSettings().buttonMaker(

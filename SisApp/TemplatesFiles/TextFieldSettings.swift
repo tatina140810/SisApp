@@ -1,79 +1,57 @@
 import UIKit
 
-class TextFieldSettings: UITextField {
-
-    // Function to create and configure a text field
-    func textFieldMaker(
-        placeholder: String,
-        placeholderColor: UIColor = .white,
-        backgroundColor: UIColor = .black,
-        textColor: UIColor = .white,
-        cornerRadius: CGFloat = 8,
-        autocapitalizationType: UITextAutocapitalizationType = .none
-    ) -> UITextField {
-
-        let textField = UITextField()
-
-        textField.backgroundColor = backgroundColor
-        textField.textColor = textColor
-        textField.layer.cornerRadius = cornerRadius
-        textField.autocapitalizationType = autocapitalizationType
-        textField.translatesAutoresizingMaskIntoConstraints = false
-
-        // Set placeholder with color
-        textField.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
-            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor]
-        )
-
-        // Create gradient background
-        let gradient = UIImage.gradientImage(bounds: textField.bounds, colors: [
-            UIColor(hex: "#9358F7"),
-            UIColor(hex: "#7B78F2"),
-            UIColor(hex: "#6197EE"),
-            UIColor(hex: "#45B5E9"),
-            UIColor(hex: "#10D7E2")
-        ])
-        _ = UIColor(patternImage: gradient)
-
+class GradientTextField: UITextField {
     
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
+    private var gradientColors: [UIColor]
+    private var borderWidth: CGFloat
+    
+    init(
+        placeholder: String,
+        font: UIFont = UIFont(name: "SFProText-Medium", size: 19)!,
+        gradientColors: [UIColor] = [UIColor(hex: "#7113E3"), UIColor(hex: "#61C2E2")],
+        translatesAutoresizingMaskIntoConstraints: Bool = false
+    ) {
         
-        applyGradientBorder(to: textField, withColors: [UIColor(hex: "#9358F7"),
-                                                       UIColor(hex: "#7B78F2"),
-                                                       UIColor(hex: "#6197EE"),
-                                                       UIColor(hex: "#45B5E9"),
-                                                       UIColor(hex: "#10D7E2")])
-
-        return textField
+        self.gradientColors = gradientColors
+        self.borderWidth = 1.5
+        
+        super.init(frame: .zero)
+        
+        
+        self.backgroundColor = backgroundColor
+        self.textColor = .white
+        self.layer.cornerRadius = 10
+        self.borderStyle = .line
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor(hex: "#B0B0B0")]
+        )
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+        self.font = font
+        
     }
-
-    // Function to apply gradient to the border
-    private func applyGradientBorder(to textField: UITextField, withColors colors: [UIColor]) {
-        let gradient = CAGradientLayer()
-        gradient.colors = colors.map(\.cgColor)
-        gradient.locations = [0.0, 1.0]
-
-        // Set the frame of the gradient layer to match the text field bounds
-        gradient.frame = CGRect(x: 0, y: 0, width: textField.bounds.width, height: textField.bounds.height)
-
-        // Create a shape layer to act as the border
-        let shape = CAShapeLayer()
-        shape.lineWidth = 2
-        shape.path = UIBezierPath(roundedRect: textField.bounds, cornerRadius: textField.layer.cornerRadius).cgPath
-        shape.strokeColor = UIColor.black.cgColor // Optional: Set stroke color for fallback
-        shape.fillColor = UIColor.white.cgColor
-
-        // Apply the gradient to the border shape
-        gradient.mask = shape
-
-        // Add the gradient as a sublayer of the text field layer
-        textField.layer.addSublayer(gradient)
-        textField.layer.borderColor = UIColor(hex: "#6197EE").cgColor
-        textField.borderStyle = .line
-        textField.layer.borderWidth = 2
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        applyGradientBorder()
+    }
+    
+    private func applyGradientBorder() {
+        guard self.bounds.size != .zero else { return }
+        
+        let gradientImage = UIImage.gradientImage(bounds: self.bounds, colors: gradientColors)
+        let gradientColor = UIColor(patternImage: gradientImage)
+        self.layer.borderColor = gradientColor.cgColor
+        self.layer.borderWidth = borderWidth
     }
 }
 
@@ -81,17 +59,16 @@ extension UIImage {
     static func gradientImage(bounds: CGRect, colors: [UIColor]) -> UIImage {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
-        gradientLayer.colors = colors.map(\.cgColor)
-
-        // This makes it left to right, default is top to bottom
+        gradientLayer.colors = colors.map { $0.cgColor }
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-
-        return renderer.image { ctx in
-            gradientLayer.render(in: ctx.cgContext)
-        }
+        
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+        guard let context = UIGraphicsGetCurrentContext() else { return UIImage() }
+        gradientLayer.render(in: context)
+        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return gradientImage ?? UIImage()
     }
 }
-
