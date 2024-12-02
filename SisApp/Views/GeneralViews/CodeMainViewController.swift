@@ -96,15 +96,19 @@ class CodeMainViewController: UIViewController {
             fullText: "У вас нет аккаунта?\nЗарегистрируйтесь сейчас",
             tappableText: "Зарегистрируйтесь сейчас",
             tapTarget: self,
-            action: #selector(attributedPrivaciTextTapped)
+            action: #selector(attributedTextTapped)
         )
     }
-    @objc func attributedPrivaciTextTapped(){
-        let vc = PhoneRegisterViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
+    @objc func attributedTextTapped(){
+        let keychainService = KeychainService()
+        let phoneRegisterCoordinator = PhoneRegisterCoordinator (
+            navigationController: navigationController!, keychainService: keychainService)
+        phoneRegisterCoordinator.start()
+        }
+
+        }
+
     
-    
-}
+
 
 

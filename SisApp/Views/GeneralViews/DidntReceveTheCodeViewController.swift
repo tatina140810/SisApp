@@ -1,6 +1,6 @@
 import UIKit
 
-class DidntReceveTheCodeViewControlle: UIViewController {
+class DidntReceveTheCodeViewController: UIViewController {
     
     private var titleLabel: UILabel = {
         let label = UILabel()

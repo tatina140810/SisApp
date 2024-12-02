@@ -3,73 +3,84 @@ import UIKit
 
 class PhoneRegisterViewController: UIViewController {
     
+    private let viewModel: PhoneRegisterViewModel
+    
+    init(viewModel: PhoneRegisterViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var phoneNumberLabel: UILabel = {
         let label = UILabel()
-        label.text = "Номер телефона"
         label.textColor = .white
         label.textAlignment = .left
         label.font = UIFont(name: "SFProDisplay-Regular", size: 13)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private var codeTextField = GradientTextField(placeholder: "+7")
-    private var numberTextField = GradientTextField(placeholder: "9195346703")
-   
+    
+    private let codeTextField = GradientTextField(placeholder: "+7")
+    private let numberTextField = GradientTextField(placeholder: "9195346703")
+    
     private var subTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Код придет на ваш номер телефона"
         label.textColor = .white
         label.textAlignment = .left
         label.font = UIFont(name: "SFProDisplay-Regular", size: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private lazy var getCodeButton: UIButton = {
         let button = ButtonSettings().buttonMaker(
             title: "Получить код",
             target: self,
-            action: #selector(entryButtonTapped)
+            action: #selector(getCodeButtonTapped)
         )
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private var countryCoodeButton = CountryCodeButton()
+    
     let attributes: [NSAttributedString.Key: Any] = [
         .font: UIFont(name: "SFProText-Regular", size: 20) as Any,
         .foregroundColor: UIColor.white
     ]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupUI()
-        countryCodeButtonSetup()
         backButtonSettings()
         navigationItem.title = "Зарегистрироваться"
         navigationController?.navigationBar.titleTextAttributes = attributes
         
+        setupBindings()
     }
-    private func setupUI(){
-        
+    
+    private func setupUI() {
         view.addSubview(phoneNumberLabel)
-        view.addSubview(codeTextField)
         view.addSubview(numberTextField)
         view.addSubview(subTitleLabel)
         view.addSubview(getCodeButton)
-        
-        
+        view.addSubview(countryCoodeButton)
+      
         NSLayoutConstraint.activate([
-            
             phoneNumberLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 135),
             phoneNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 34),
             
-            codeTextField.topAnchor.constraint(equalTo: phoneNumberLabel.bottomAnchor, constant: 15),
-            codeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 34),
-            codeTextField.widthAnchor.constraint(equalToConstant: 70),
-            codeTextField.heightAnchor.constraint(equalToConstant: 50),
-            
+            countryCoodeButton.topAnchor.constraint(equalTo: phoneNumberLabel.bottomAnchor, constant: 15),
+            countryCoodeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 34),
+            countryCoodeButton.widthAnchor.constraint(equalToConstant: 90),
+            countryCoodeButton.heightAnchor.constraint(equalToConstant: 50),
             
             numberTextField.topAnchor.constraint(equalTo: phoneNumberLabel.bottomAnchor, constant: 15),
-            numberTextField.leadingAnchor.constraint(equalTo: codeTextField.trailingAnchor, constant: 18),
+            numberTextField.leadingAnchor.constraint(equalTo: countryCoodeButton.trailingAnchor, constant: 18),
             numberTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -37),
             numberTextField.heightAnchor.constraint(equalToConstant: 50),
             
@@ -80,47 +91,47 @@ class PhoneRegisterViewController: UIViewController {
             getCodeButton.heightAnchor.constraint(equalToConstant: 56),
             getCodeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             getCodeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
-            
         ])
-        
     }
-    func countryCodeButtonSetup(){
-        let countryCodeButton = UIButton(type: .custom)
-        countryCodeButton.setImage(UIImage(resource: .subtract), for: .normal)
-        countryCodeButton.tintColor = .white
-        countryCodeButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        countryCodeButton.translatesAutoresizingMaskIntoConstraints = false
-        countryCodeButton.addTarget(self, action: #selector(choiseCodeButtonTapped), for: .touchUpInside)
-        
-        
-        let rightPaddingView = UIView(frame: CGRect(x: -15, y: 0, width: 24, height: 24))
-        rightPaddingView.addSubview(countryCodeButton)
-        countryCodeButton.center = rightPaddingView.center
-        
-        codeTextField.rightView = rightPaddingView
-        codeTextField.rightViewMode = .always
-    }
-    private func backButtonSettings(){
+
+    private func backButtonSettings() {
         let backButton = UIBarButtonItem(
-              image: UIImage(systemName: "arrow.backward"),
-              style: .plain,
-              target: self,
-              action: #selector(backButtonTapped)
-          )
-          backButton.tintColor = .white
-          navigationItem.leftBarButtonItem = backButton
+            image: UIImage(systemName: "arrow.backward"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        backButton.tintColor = .white
+        navigationItem.leftBarButtonItem = backButton
     }
     
-    @objc func entryButtonTapped(){
-        let vc = RegisterVerificationViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    @objc func choiseCodeButtonTapped(){
-        print("choiseCodeButtonTapped")
+    private func setupBindings() {
+        subTitleLabel.text = viewModel.subtitle
+        codeTextField.text = viewModel.countryCode
     }
     
+    @objc private func backButtonTapped() {
+        viewModel.backButton()
+    }
+    
+    @objc private func getCodeButtonTapped() {
+        savePhoneNumber()
+        viewModel.getCodeNavigate()
+    }
+    
+    @objc private func savePhoneNumber() {
+        guard
+            let countryCode = countryCoodeButton.configuration?.title,
+            let phoneNumber = numberTextField.text,
+            !phoneNumber.isEmpty
+        else {
+            print("Ошибка: номер телефона не заполнен.")
+            return
+        }
+        
+        let fullPhoneNumber = "\(countryCode)\(phoneNumber)"
+        viewModel.savePhoneNumber(fullPhoneNumber)
+        print("Сохранён номер телефона: \(fullPhoneNumber)")
+    }
 }
 

@@ -1,21 +1,28 @@
 import UIKit
 
-
 class ButtonSettings: UIButton {
 
-    let gradientColors: [UIColor] = [
+    private var gradientColors: [UIColor] = [
         UIColor(hex: "#9358F7"),
         UIColor(hex: "#7B78F2"),
         UIColor(hex: "#6197EE"),
         UIColor(hex: "#45B5E9"),
         UIColor(hex: "#10D7E2")
     ]
-    
+    private var cornerRadius: CGFloat = 28
+    private var gradientLayer: CAGradientLayer?
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        applyGradientToButton(colors: gradientColors)
+        applyGradientBackground()
+        if isEnabled {
+            applyGradientBackground()
+        } else {
+            gradientLayer?.removeFromSuperlayer() 
+            gradientLayer = nil
+        }
     }
-    
+
     func buttonMaker(title: String = "Button",
                      titleColor: UIColor = .white,
                      target: Any?,
@@ -25,7 +32,7 @@ class ButtonSettings: UIButton {
         let button = ButtonSettings()
         button.setTitle(title, for: .normal)
         button.setTitleColor(titleColor, for: .normal)
-        button.layer.cornerRadius = 28
+        button.layer.cornerRadius = cornerRadius
         button.clipsToBounds = true
         button.titleLabel?.font = UIFont(name: "SFProText-Regular", size: 16)
         button.addTarget(target, action: action, for: controlEvent)
@@ -33,20 +40,21 @@ class ButtonSettings: UIButton {
         return button
     }
 
-    private func applyGradientToButton(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint = CGPoint(x: 0, y: 0), endPoint: CGPoint = CGPoint(x: 1, y: 1)) {
+    private func applyGradientBackground() {
+       
+        gradientLayer?.removeFromSuperlayer()
         
-        if let existingGradientLayer = self.layer.sublayers?.first(where: { $0 is CAGradientLayer }) {
-            existingGradientLayer.removeFromSuperlayer()
-        }
-        
+       
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.locations = locations
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
+        gradientLayer.colors = gradientColors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.frame = self.bounds
-        
+        gradientLayer.cornerRadius = cornerRadius
+     
         self.layer.insertSublayer(gradientLayer, at: 0)
+        
+     
+        self.gradientLayer = gradientLayer
     }
 }
-

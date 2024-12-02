@@ -22,6 +22,7 @@ class GradientTextField: UITextField {
         self.textColor = .white
         self.layer.cornerRadius = 10
         self.borderStyle = .line
+        self.textAlignment = .center
         self.translatesAutoresizingMaskIntoConstraints = false
         self.attributedPlaceholder = NSAttributedString(
             string: placeholder,

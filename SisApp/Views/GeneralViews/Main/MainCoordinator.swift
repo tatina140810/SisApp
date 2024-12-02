@@ -29,8 +29,10 @@ class MainCoordinator: MainCoordinatorProtocol {
             phoneLoginCoordinator.start()
         }
     func showPhoneRegister() {
-        let phoneRegisterVC = PhoneRegisterViewController()
-        navigationController.pushViewController(phoneRegisterVC, animated: true)
+        let keychainService = KeychainService()
+        let phoneRegisterCoordinator = PhoneRegisterCoordinator (
+            navigationController: navigationController, keychainService: keychainService)
+        phoneRegisterCoordinator.start()
     }
     
     

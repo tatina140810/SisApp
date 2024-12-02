@@ -1,7 +1,6 @@
 import UIKit
-import KeychainSwift
 
-class PhoneLoginCoordinator {
+class PhoneRegisterCoordinator {
     
     private let navigationController: UINavigationController
     private let keychainService: KeychainService
@@ -12,7 +11,7 @@ class PhoneLoginCoordinator {
         self.keychainService = keychainService
     }
 
-    func savePhoneNumber(_ fullPhoneNumber: String) {
+    func didEnterPhoneNumber(_ fullPhoneNumber: String) {
         let isSaved = keychainService.set(fullPhoneNumber, forKey: "UserPhoneNumber")
         if isSaved {
             print("Phone number saved successfully.")
@@ -21,14 +20,15 @@ class PhoneLoginCoordinator {
         }
     }
 
+
     func start() {
-        let viewModel = PhoneLoginViewModel(coordinator: self, keychainService: keychainService)
-        let phoneLoginVC = PhoneLoginViewController(viewModel: viewModel)
-        navigationController.pushViewController(phoneLoginVC, animated: true)
+        let viewModel = PhoneRegisterViewModel(coordinator: self, keychainService: keychainService)
+        let phoneRegisterVC = PhoneRegisterViewController(viewModel: viewModel)
+        navigationController.pushViewController(phoneRegisterVC , animated: true)
     }
     func showVerification() {
-            let verificationCoordinator = VerificationCoordinator (
-                navigationController: navigationController)
+            let verificationCoordinator = RegisterVerificationCoordinator (
+                navigationController: navigationController, keychainService: keychainService)
         verificationCoordinator.start()
         }
 
@@ -37,3 +37,4 @@ class PhoneLoginCoordinator {
         navigationController.popViewController(animated: true)
     }
 }
+
