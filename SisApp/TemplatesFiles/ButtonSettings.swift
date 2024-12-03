@@ -1,7 +1,7 @@
 import UIKit
 
 class ButtonSettings: UIButton {
-
+    
     private var gradientColors: [UIColor] = [
         UIColor(hex: "#9358F7"),
         UIColor(hex: "#7B78F2"),
@@ -11,7 +11,7 @@ class ButtonSettings: UIButton {
     ]
     private var cornerRadius: CGFloat = 28
     private var gradientLayer: CAGradientLayer?
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         applyGradientBackground()
@@ -22,7 +22,7 @@ class ButtonSettings: UIButton {
             gradientLayer = nil
         }
     }
-
+    
     func buttonMaker(title: String = "Button",
                      titleColor: UIColor = .white,
                      target: Any?,
@@ -39,22 +39,22 @@ class ButtonSettings: UIButton {
         
         return button
     }
-
+    
     private func applyGradientBackground() {
-       
+        
         gradientLayer?.removeFromSuperlayer()
         
-       
+        
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = gradientColors.map { $0.cgColor }
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.frame = self.bounds
         gradientLayer.cornerRadius = cornerRadius
-     
+        
         self.layer.insertSublayer(gradientLayer, at: 0)
         
-     
+        
         self.gradientLayer = gradientLayer
     }
 }

@@ -21,14 +21,11 @@ class  PhoneRegisterViewModel {
             print("Failed to save phone number.")
         }
     }
-        
-        func getCodeNavigate() {
-            coordinator.showVerification()
-        }
-        
-        func backButton() {
-            coordinator.backButton()
-        }
-    }
-
     
+    func getCodeNavigate() {
+        coordinator.showVerification()
+    }
+    
+}
+
+

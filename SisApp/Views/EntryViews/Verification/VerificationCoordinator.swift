@@ -1,14 +1,14 @@
 import Foundation
 import UIKit
-protocol VerificationCoordinatorProtocol{
+protocol VerificationCoordinatorProtocol: AnyObject {
     func navigateToAppEntry()
     func navigateToDidNotReceiveCode()
-    func backButton()
     
 }
-class VerificationCoordinator: VerificationCoordinatorProtocol {
-    private let navigationController: UINavigationController
+class VerificationCoordinator: VerificationCoordinatorProtocol{
     
+    
+    private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -21,15 +21,15 @@ class VerificationCoordinator: VerificationCoordinatorProtocol {
     }
     
     func navigateToAppEntry() {
-        let appEntryVC = AppEntryViewController()
-        navigationController.pushViewController(appEntryVC, animated: true)
+        let appEntryCoordinator = AppEntryCoordinator(
+            navigationController: navigationController)
+        appEntryCoordinator.start()
     }
     
+    
     func navigateToDidNotReceiveCode() {
-        let didNotReceiveVC = DidntReceveTheCodeViewController()
-        navigationController.pushViewController(didNotReceiveVC, animated: true)
-    }
-    func backButton(){
-        navigationController.popViewController(animated: true)
+        let didNotReceiveCoordinator = DidntReceiveTheCodeCoordinator(
+            navigationController: navigationController)
+        didNotReceiveCoordinator.start()
     }
 }

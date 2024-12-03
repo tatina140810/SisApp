@@ -56,10 +56,9 @@ class PhoneLoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupUI()
-        backButtonSettings()
         navigationItem.title = "Войти"
         navigationController?.navigationBar.titleTextAttributes = attributes
-        
+        keyBoardSetUp()
         setupBindings()
     }
     
@@ -69,7 +68,7 @@ class PhoneLoginViewController: UIViewController {
         view.addSubview(subTitleLabel)
         view.addSubview(getCodeButton)
         view.addSubview(countryCoodeButton)
-      
+        
         NSLayoutConstraint.activate([
             phoneNumberLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 135),
             phoneNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 34),
@@ -93,26 +92,12 @@ class PhoneLoginViewController: UIViewController {
             getCodeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
         ])
     }
-
-    private func backButtonSettings() {
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.backward"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        backButton.tintColor = .white
-        navigationItem.leftBarButtonItem = backButton
-    }
     
     private func setupBindings() {
         subTitleLabel.text = viewModel.subtitle
         codeTextField.text = viewModel.countryCode
     }
     
-    @objc private func backButtonTapped() {
-        viewModel.backButton()
-    }
     
     @objc private func getCodeButtonTapped() {
         savePhoneNumber()

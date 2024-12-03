@@ -10,18 +10,17 @@ import UIKit
 protocol RegisterVerificationCoordinatorProtocol{
     func navigateToAppEntry()
     func navigateToDidNotReceiveCode()
-    func backButton()
     
 }
 class RegisterVerificationCoordinator: RegisterVerificationCoordinatorProtocol {
     private let navigationController: UINavigationController
     private let keychainService: KeychainService
-
-      
-        init(navigationController: UINavigationController, keychainService: KeychainService) {
-            self.navigationController = navigationController
-            self.keychainService = keychainService
-        }
+    
+    
+    init(navigationController: UINavigationController, keychainService: KeychainService) {
+        self.navigationController = navigationController
+        self.keychainService = keychainService
+    }
     
     func start() {
         let viewModel = RegisterVerificationViewModel(coordinator: self)
@@ -30,15 +29,12 @@ class RegisterVerificationCoordinator: RegisterVerificationCoordinatorProtocol {
     }
     
     func navigateToAppEntry() { 
-           let passwordCodeCreateVC = PasswordCodeCreateCoordinator(navigationController: navigationController, keychainService: keychainService)
-           passwordCodeCreateVC.start()
-       }
+        let passwordCodeCreateVC = PasswordCodeCreateCoordinator(navigationController: navigationController, keychainService: keychainService)
+        passwordCodeCreateVC.start()
+    }
     
     func navigateToDidNotReceiveCode() {
-        let didNotReceiveVC = DidntReceveTheCodeViewController()
-        navigationController.pushViewController(didNotReceiveVC, animated: true)
-    }
-    func backButton(){
-        navigationController.popViewController(animated: true)
+        let didNotReceiveCoordinator = DidntReceiveTheCodeCoordinator(navigationController: navigationController)
+        didNotReceiveCoordinator.start()
     }
 }

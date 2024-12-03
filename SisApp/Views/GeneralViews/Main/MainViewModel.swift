@@ -9,9 +9,11 @@ protocol MainViewModelProtocol {
 }
 class MainViewModel: MainViewModelProtocol {
     
+    private let keychainService: KeychainService
     private let coordinator: MainCoordinatorProtocol
     
-    init(coordinator: MainCoordinatorProtocol){
+    init(keychainService: KeychainService, coordinator: MainCoordinatorProtocol) {
+        self.keychainService = keychainService
         self.coordinator = coordinator
     }
     

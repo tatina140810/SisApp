@@ -5,7 +5,6 @@ protocol PasswordCodeCreateViewModelProtocol {
     var onCodeSaved: (() -> Void)? { get set }
     func saveCode(_ code: String)
     func navigateToApp()
-    func backButton()
 }
 
 class PasswordCodeCreateViewModel: PasswordCodeCreateViewModelProtocol {
@@ -13,13 +12,13 @@ class PasswordCodeCreateViewModel: PasswordCodeCreateViewModelProtocol {
     private var coordinator: PasswordCodeCreateCoordinatorProtocol?
     
     var onCodeSaved: (() -> Void)?
-   
-
+    
+    
     init(keychainService: KeychainService, coordinator: PasswordCodeCreateCoordinatorProtocol) {
         self.keychainService = keychainService
         self.coordinator = coordinator
     }
-
+    
     func saveCode(_ code: String) {
         if keychainService.set(code, forKey: "passwordCode") {
             print("Code successfully saved to Keychain: \(code)")
@@ -31,7 +30,5 @@ class PasswordCodeCreateViewModel: PasswordCodeCreateViewModelProtocol {
     func navigateToApp(){
         coordinator!.navigateToAppEntry()
     }
-    func backButton(){
-        coordinator!.navigateBack()
-    }
+    
 }

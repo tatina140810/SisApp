@@ -1,6 +1,16 @@
 import UIKit
 
 class CodeMainViewController: UIViewController {
+    private let viewModel: CodeMainViewModelProtocol
+    
+    init(viewModel: CodeMainViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private var logoImage: UIImageView = {
         let image = UIImageView()
@@ -73,7 +83,7 @@ class CodeMainViewController: UIViewController {
             subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 17.67),
             
-
+            
             entryButton.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 99.85),
             entryButton.heightAnchor.constraint(equalToConstant: 56),
             entryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
@@ -85,11 +95,10 @@ class CodeMainViewController: UIViewController {
         
     }
     
-    @objc func entryButtonTapped(){
-        let vc = EnterСodePasswordViewController()
-        navigationController?.pushViewController(vc, animated: true)
-      
+    @objc private func entryButtonTapped() {
+        viewModel.didTapEntryButton()
     }
+    
     private func createAttributedText() {
         AttributedTextHelper.configureAttributedText(
             for: noAccauntLabel,
@@ -99,16 +108,14 @@ class CodeMainViewController: UIViewController {
             action: #selector(attributedTextTapped)
         )
     }
-    @objc func attributedTextTapped(){
-        let keychainService = KeychainService()
-        let phoneRegisterCoordinator = PhoneRegisterCoordinator (
-            navigationController: navigationController!, keychainService: keychainService)
-        phoneRegisterCoordinator.start()
-        }
-
-        }
-
     
+    @objc private func attributedTextTapped() {
+        viewModel.didTapRegisterButton()
+    }
+    
+}
+
+
 
 
 

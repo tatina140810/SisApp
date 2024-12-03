@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
             subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 17.67),
             
-
+            
             entryButton.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 99.85),
             entryButton.heightAnchor.constraint(equalToConstant: 56),
             entryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
@@ -98,7 +98,7 @@ class MainViewController: UIViewController {
     
     @objc func entryButtonTapped(){
         viewModel.handleEntryButtonTapped()
-      
+        
     }
     private func createAttributedText() {
         AttributedTextHelper.configureAttributedText(

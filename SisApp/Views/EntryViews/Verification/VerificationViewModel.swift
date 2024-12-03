@@ -9,7 +9,6 @@ protocol VerificationViewModelProtocol {
     func startTimer()
     func validateCode(_ code: String)
     func navigateToAppEntry()
-    func backButtonTapped()
     func didntReceveCode()
 }
 import Foundation
@@ -56,10 +55,6 @@ class VerificationViewModel: VerificationViewModelProtocol {
     
     func navigateToAppEntry() {
         coordinator.navigateToAppEntry()
-    }
-    
-    func backButtonTapped() {
-        coordinator.backButton()
     }
     
     func didntReceveCode() {

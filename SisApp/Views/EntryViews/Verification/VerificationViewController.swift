@@ -109,7 +109,7 @@ class VerificationViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupUI()
-        backButtonSettings()
+        keyBoardSetUp()
         navigationItem.title = "Войти"
         navigationController?.navigationBar.titleTextAttributes = attributes
         setupBindings()
@@ -163,16 +163,6 @@ class VerificationViewController: UIViewController {
         ])
         
     }
-    private func backButtonSettings(){
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.backward"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        backButton.tintColor = .white
-        navigationItem.leftBarButtonItem = backButton
-    }
     
     private func setupTextFields() {
         let textFields = [firstTextField, secondTextField, thirdTextField, forthTextField, fifthTextField, sixthTextField]
@@ -201,10 +191,6 @@ class VerificationViewController: UIViewController {
         viewModel.didntReceveCode()
     }
     
-    @objc private func backButtonTapped() {
-        viewModel.backButtonTapped()
-    }
-    
     @objc private func textFieldDidChange(_ textField: UITextField) {
         let textFields = [firstTextField, secondTextField, thirdTextField, forthTextField, fifthTextField, sixthTextField]
         let code = textFields.map { $0.text ?? "" }.joined()
@@ -214,7 +200,7 @@ class VerificationViewController: UIViewController {
 }
 extension VerificationViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-       
+        
         guard string.count <= 1, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: string)) || string.isEmpty else {
             return false
         }

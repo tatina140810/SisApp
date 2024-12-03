@@ -1,10 +1,3 @@
-//
-//   RegisterVerificationViewModelProtocol.swift
-//  SisApp
-//
-//  Created by Tatina Dzhakypbekova on 2/12/24.
-//
-
 import Foundation
 import UIKit
 import Foundation
@@ -16,7 +9,6 @@ protocol RegisterVerificationViewModelProtocol {
     func startTimer()
     func validateCode(_ code: String)
     func navigateToAppEntry()
-    func backButtonTapped()
     func didntReceveCode()
 }
 
@@ -64,9 +56,6 @@ class RegisterVerificationViewModel: RegisterVerificationViewModelProtocol {
         coordinator.navigateToAppEntry()
     }
     
-    func backButtonTapped() {
-        coordinator.backButton()
-    }
     
     func didntReceveCode() {
         coordinator.navigateToDidNotReceiveCode()

@@ -1,11 +1,12 @@
 import UIKit
 
-protocol MainCoordinatorProtocol {
-    func showPhoneLogin()
-    func showPhoneRegister()
+protocol CodeMainCoordinatorProtocol: AnyObject {
+    func navigateToEnterCodePassword()
+    func navigateToPhoneRegister()
 }
 
-class MainCoordinator: MainCoordinatorProtocol {
+class CodeMainCoordinator: CodeMainCoordinatorProtocol {
+    
     
     private let navigationController: UINavigationController
     private let keychainService: KeychainService
@@ -14,24 +15,22 @@ class MainCoordinator: MainCoordinatorProtocol {
         self.navigationController = navigationController
         self.keychainService = keychainService
     }
-    
-    
     func start() -> UIViewController {
-        let viewModel = MainViewModel(keychainService: keychainService, coordinator: self)
-        let viewController = MainViewController(viewModel: viewModel)
+        let viewModel = CodeMainViewModel(
+            keychainService: keychainService,
+            coordinator: self
+        )
+        let viewController = CodeMainViewController(viewModel: viewModel)
         return viewController
     }
     
     
-    func showPhoneLogin() {
-        let phoneLoginCoordinator = PhoneLoginCoordinator(
-            navigationController: navigationController,
-            keychainService: keychainService
-        )
-        phoneLoginCoordinator.start()
+    func navigateToEnterCodePassword() {
+        let enterCodeVC = EnterCodePasswordCoordinator(navigationController: navigationController)
+        enterCodeVC.start()
     }
     
-    func showPhoneRegister() {
+    func navigateToPhoneRegister() {
         let phoneRegisterCoordinator = PhoneRegisterCoordinator(
             navigationController: navigationController,
             keychainService: keychainService
@@ -39,3 +38,4 @@ class MainCoordinator: MainCoordinatorProtocol {
         phoneRegisterCoordinator.start()
     }
 }
+

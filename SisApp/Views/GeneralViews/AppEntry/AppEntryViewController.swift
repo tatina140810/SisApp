@@ -1,12 +1,17 @@
-//
-//  AppEntryViewController.swift
-//  SisApp
-//
-//  Created by Tatina Dzhakypbekova on 1/12/24.
-//
+
 import UIKit
 
 class AppEntryViewController: UIViewController {
+    private let viewModel: AppEntryViewModelProtocol
+    
+    init(viewModel: AppEntryViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     lazy var codeCreatedButton: UIButton = {
         let button = UIButton()
@@ -23,7 +28,7 @@ class AppEntryViewController: UIViewController {
         return button
     }()
     
-  
+    
     private lazy var appEntryButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor(hex: "#3796FD"), for: .normal)
@@ -35,17 +40,18 @@ class AppEntryViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupUI()
-        backButtonSettings()
+        
     }
     private func setupUI(){
+        
         view.addSubview(codeCreatedButton)
         view.addSubview(appEntryButton)
-    
+        
         NSLayoutConstraint.activate([
             codeCreatedButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 325),
             codeCreatedButton.heightAnchor.constraint(equalToConstant: 117.85),
@@ -59,22 +65,9 @@ class AppEntryViewController: UIViewController {
         ])
         
     }
-    private func backButtonSettings(){
-        let backButton = UIBarButtonItem(
-              image: UIImage(systemName: "arrow.backward"),
-              style: .plain,
-              target: self,
-              action: #selector(backButtonTapped)
-          )
-          backButton.tintColor = .white
-          navigationItem.leftBarButtonItem = backButton
-    }
     
-    @objc func appEntryButtonTapped(){
-       print("Вход в приложение")
-    }
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+    @objc private func appEntryButtonTapped() {
+        viewModel.didTapAppEntryButton()
     }
     
 }
