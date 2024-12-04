@@ -1,5 +1,6 @@
 import UIKit
 
+// TextField - шаблон с градиентным бордюром
 class GradientTextField: UITextField {
     
     private var gradientColors: [UIColor]

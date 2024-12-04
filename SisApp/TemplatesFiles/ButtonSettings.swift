@@ -1,4 +1,5 @@
 import UIKit
+// класс- шаблон для градиентных кнопок
 
 class ButtonSettings: UIButton {
     
