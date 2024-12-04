@@ -58,7 +58,7 @@ class PhoneLoginViewController: UIViewController {
         setupUI()
         navigationItem.title = "Войти"
         navigationController?.navigationBar.titleTextAttributes = attributes
-        keyBoardSetUp()
+        dismissKeyboardGesture()
         setupBindings()
     }
     

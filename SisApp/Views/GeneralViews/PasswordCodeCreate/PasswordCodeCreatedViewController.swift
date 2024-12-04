@@ -4,12 +4,12 @@ class PasswordCodeCreateViewController: UIViewController {
     
     private var viewModel: PasswordCodeCreateViewModelProtocol
     
-    
+    private let gradientColors: [UIColor] = [UIColor(hex: "#7113E3"), UIColor(hex: "#61C2E2")]
     private lazy var firstTextField: UITextField = createTextField()
     private lazy var secondTextField: UITextField = createTextField()
     private lazy var thirdTextField: UITextField = createTextField()
     private lazy var forthTextField: UITextField = createTextField()
-    
+                                                     
     private lazy var textFields: [UITextField] = [firstTextField, secondTextField, thirdTextField, forthTextField]
     private var codeCreateLabel: UILabel = {
         let label = UILabel()
@@ -52,6 +52,7 @@ class PasswordCodeCreateViewController: UIViewController {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+
     
     init(viewModel: PasswordCodeCreateViewModelProtocol) {
         self.viewModel = viewModel
@@ -76,6 +77,8 @@ class PasswordCodeCreateViewController: UIViewController {
         view.addSubview(subTitleLabel)
         view.addSubview(stackView)
         view.addSubview(skipButton)
+    
+
         
         NSLayoutConstraint.activate([
             codeCreateLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 168),
@@ -92,7 +95,9 @@ class PasswordCodeCreateViewController: UIViewController {
             skipButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 28),
             skipButton.heightAnchor.constraint(equalToConstant: 56),
             skipButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            skipButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
+            skipButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            
+            
         ])
     }
     
@@ -107,17 +112,34 @@ class PasswordCodeCreateViewController: UIViewController {
         textField.font = UIFont(name: "SFProDisplay-Bold", size: 25)
         textField.textColor = .white
         textField.keyboardType = .numberPad
+        textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hex: "#1C192C")
-        let placeholderText = "•"
+        let placeholderText = "·"
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.lightGray,
-            .font: UIFont.systemFont(ofSize: 50)
+            .font: UIFont.systemFont(ofSize: 100),
+            .baselineOffset: 12
         ]
         textField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        stackView.layer.cornerRadius = stackView.bounds.height / 2
+        applyGradientBorder(to: stackView, colors: gradientColors, borderWidth: 2)
+    }
     
+    private func applyGradientBorder(to view: UIView, colors: [UIColor], borderWidth: CGFloat) {
+        guard view.bounds != .zero else { return }
+
+        let gradientImage = UIImage.gradientImage(bounds: view.bounds, colors: colors)
+        let gradientColor = UIColor(patternImage: gradientImage)
+
+        view.layer.borderColor = gradientColor.cgColor
+        view.layer.borderWidth = borderWidth
+    }
+   
     private func setupBindings() {
         viewModel.onCodeSaved = {
             self.viewModel.navigateToApp()
@@ -139,6 +161,7 @@ class PasswordCodeCreateViewController: UIViewController {
 
 extension PasswordCodeCreateViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
         guard string.count <= 1, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: string)) || string.isEmpty else {
             return false
         }
@@ -162,4 +185,5 @@ extension PasswordCodeCreateViewController: UITextFieldDelegate {
         
         return false
     }
+    
 }

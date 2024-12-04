@@ -58,7 +58,7 @@ class PhoneRegisterViewController: UIViewController {
         setupUI()
         navigationItem.title = "Зарегистрироваться"
         navigationController?.navigationBar.titleTextAttributes = attributes
-        keyBoardSetUp()
+        dismissKeyboardGesture()
         setupBindings()
     }
     

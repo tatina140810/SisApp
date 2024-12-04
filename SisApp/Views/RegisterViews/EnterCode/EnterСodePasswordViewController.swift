@@ -16,6 +16,7 @@ class EnterСodePasswordViewController: UIViewController {
     
     private let keychainService = KeychainService()
     private lazy var textFields: [UITextField] = (1...4).map { _ in createTextField() }
+    private let gradientColors: [UIColor] = [UIColor(hex: "#7113E3"), UIColor(hex: "#61C2E2")]
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -31,21 +32,23 @@ class EnterСodePasswordViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: textFields)
         stack.axis = .horizontal
         stack.distribution = .fillEqually
-        stack.spacing = 0
+        stack.spacing = 10
+        stack.layer.cornerRadius = 26
+        stack.clipsToBounds = true
+        stack.backgroundColor = UIColor(hex: "#1C192C")
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
-    private let codeTextFieldContainer = GradientTextField(placeholder: "")
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextFields()
-        keyBoardSetUp()
+        dismissKeyboardGesture()
         view.backgroundColor = .black
         setupNavigationBar()
         setupUI()
+       
     }
 
     
@@ -59,22 +62,19 @@ class EnterСodePasswordViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(titleLabel)
-        view.addSubview(codeTextFieldContainer)
-        codeTextFieldContainer.addSubview(stackView)
+        view.addSubview(stackView)
+       
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 210),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            codeTextFieldContainer.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-            codeTextFieldContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            codeTextFieldContainer.heightAnchor.constraint(equalToConstant: 52),
-            codeTextFieldContainer.widthAnchor.constraint(equalToConstant: 180),
             
-            stackView.topAnchor.constraint(equalTo: codeTextFieldContainer.topAnchor, constant: 4),
-            stackView.leadingAnchor.constraint(equalTo: codeTextFieldContainer.leadingAnchor, constant: 4),
-            stackView.trailingAnchor.constraint(equalTo: codeTextFieldContainer.trailingAnchor, constant: -4),
-            stackView.bottomAnchor.constraint(equalTo: codeTextFieldContainer.bottomAnchor, constant: -4)
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 36),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 52),
+            stackView.widthAnchor.constraint(equalToConstant: 200),
+            
         ])
     }
     
@@ -92,18 +92,35 @@ class EnterСodePasswordViewController: UIViewController {
         textField.font = UIFont(name: "SFProDisplay-Bold", size: 25)
         textField.textColor = .white
         textField.keyboardType = .numberPad
+        textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hex: "#1C192C")
         textField.attributedPlaceholder = NSAttributedString(
             string: "•",
             attributes: [
                 .foregroundColor: UIColor.lightGray,
-                .font: UIFont.systemFont(ofSize: 50)
+                .font: UIFont.systemFont(ofSize: 50),
+                .baselineOffset: 8
             ]
         )
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        stackView.layer.cornerRadius = stackView.bounds.height / 2
+        applyGradientBorder(to: stackView, colors: gradientColors, borderWidth: 2)
+    }
     
+    private func applyGradientBorder(to view: UIView, colors: [UIColor], borderWidth: CGFloat) {
+        guard view.bounds != .zero else { return }
+
+        let gradientImage = UIImage.gradientImage(bounds: view.bounds, colors: colors)
+        let gradientColor = UIColor(patternImage: gradientImage)
+
+        view.layer.borderColor = gradientColor.cgColor
+        view.layer.borderWidth = borderWidth
+    }
+
     private func clearTextFields() {
         textFields.forEach { $0.text = "" }
         textFields.first?.becomeFirstResponder()

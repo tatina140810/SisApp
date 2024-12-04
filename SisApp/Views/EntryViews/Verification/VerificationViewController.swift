@@ -55,12 +55,12 @@ class VerificationViewController: UIViewController {
         return stack
     }()
     
-    private let firstTextField = GradientTextField(placeholder: "")
-    private var secondTextField = GradientTextField(placeholder: "")
-    private var thirdTextField = GradientTextField(placeholder: "")
-    private var forthTextField = GradientTextField(placeholder: "")
-    private var fifthTextField = GradientTextField(placeholder: "")
-    private var sixthTextField = GradientTextField(placeholder: "")
+    private let firstTextField = GradientTextField(placeholder: "", textAlignment: .center)
+    private var secondTextField = GradientTextField(placeholder: "", textAlignment: .center)
+    private var thirdTextField = GradientTextField(placeholder: "", textAlignment: .center)
+    private var forthTextField = GradientTextField(placeholder: "", textAlignment: .center)
+    private var fifthTextField = GradientTextField(placeholder: "", textAlignment: .center)
+    private var sixthTextField = GradientTextField(placeholder: "", textAlignment: .center)
     
     private lazy var entryButton: UIButton = {
         let button = ButtonSettings().buttonMaker(
@@ -109,7 +109,7 @@ class VerificationViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupUI()
-        keyBoardSetUp()
+        dismissKeyboardGesture()
         navigationItem.title = "Войти"
         navigationController?.navigationBar.titleTextAttributes = attributes
         setupBindings()
