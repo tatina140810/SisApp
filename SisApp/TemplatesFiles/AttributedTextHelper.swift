@@ -1,5 +1,5 @@
 import UIKit
-
+// Вспомогательный класс для настройки кликабельного текста в UILabel с использованием атрибутов.
 class AttributedTextHelper {
     
     static func configureAttributedText(
